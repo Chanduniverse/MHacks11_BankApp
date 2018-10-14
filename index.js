@@ -14,7 +14,7 @@ $(document).ready(function () {
 	});
 });
 
-/*function updateTable(n){
+function updateTable(n){
 	var database = firebase.database().ref().child("USERHIST/" + n + "/CurrentCredit/");
 database.once('value', function(snapshot){
     if(snapshot.exists()){
@@ -41,19 +41,16 @@ database.once('value', function(snapshot){
     }
 });
 }
-*/
 
 function changeData(b){
 
-	/*
-		var refrenceBalence = firebase.database().ref().child("USERDATA/" + b + "/CurrentCredit/");
-		var refrenceDebt = firebase.database().ref().child("USERDATA/" + b + "/CurrentDebt/");
+	var refrenceBalence = firebase.database().ref().child("USERDATA/" + b + "/CurrentCredit/");
+	var refrenceDebt = firebase.database().ref().child("USERDATA/" + b + "/CurrentDebt/");
 	if (refrenceBalence !== null && refrenceDebt !== null){
 		document.getElementById("currentBAL").value =  refrenceBalence;
 		document.getElementById("currentDEBT").value =  refrenceDebt;
 		updateTable(b);
-}
-*/
+	}
 
 	firebase.auth().onAuthStateChanged(function(user) {
   		if (user) {
@@ -75,48 +72,43 @@ function signout(){
 }
 
 function clearSignup() {
-	document.getElementById("InputEmail1").value = "";
-	document.getElementById("InputPassword1").value = "";
-
+	document.getElementById("signUpName").value = "";
+	document.getElementById("signUpEmail").value = "";
+	document.getElementById("signUpPassword").value = "";
 }
 
 
 function clearLogin() {
 	document.getElementById("LoginInputEmail").value = "";
 	document.getElementById("LoginInputPassword").value = "";
-
 }
-/*
+
 function eval() {
 
-	var name = document.getElementById("LoginInputEmail").value;
+	var email = document.getElementById("LoginInputEmail").value;
 	var password = document.getElementById("LoginInputPassword").value;
 
 	firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
 		clearLogin();
 		document.getElementById("wronglogin").innerHTML = "Incorrect name or password!"
-
 	});
-*/
-
 }
 
-function createUSER(first, mail, pass) {
+function createUSER(name, mail, pass) {
 
-	firebase.database().ref('USERINFO/' + first).set({
-
-		First: first,
+	firebase.database().ref('USERINFO/' + name).set({
+		Name: name,
 		Email: mail,
-		Password: password
+		Password: pass
 	});
 
-	firebase.database().ref('USERDATA/' + first).set({
+	firebase.database().ref('USERDATA/' + name).set({
 		CreditScore: 0,
 		CurrentCredit: 0.00,
 		CurrentDebt: 0.00
 	});
 
-	firebase.database().ref('USERHIST/' + first).set({
+	firebase.database().ref('USERHIST/' + name).set({
 		ColumnNum: [""],
 		AmountPaid: [""],
 		DateLoaned: [""],
@@ -133,24 +125,29 @@ function createUSER(first, mail, pass) {
 	  // Handle Errors here.
 	  var errorCode = error.code;
 	  var errorMessage = error.message;
+
 	  // ...
+	  console.log(errorCode);
+	  console.log(errorMessage);
 	});
 
 	firebase.auth().onAuthStateChanged(function(user) {
 		if (user) {
 			// User is signed in.
 			location.assign("transhist.html");
+
 		} else {
 			// No user is signed in.
-			console.log("error.code");
-			console.log("error.message");
+			if (error.code !== null && error.message !== null) {
+				console.log(error.code);
+				console.log(error.message);
+			} else {
+				console.log("error.code");
+				console.log("error.message");
+			}
 		}
 	});
-
 };
-
-
-
 
 function login() {
 	var email = document.getElementById("LoginInputEmail").value;
@@ -159,6 +156,7 @@ function login() {
 		document.getElementById("filloutlog").innerHTML = "Please fill out all the fields.";
 	} else {
 		//eval(email, password);
+
 		firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
 		  // Handle Errors here.
 		  var errorCode = error.code;
@@ -182,12 +180,14 @@ function login() {
 }
 
 function signup() {
-	var email = document.getElementById("InputEmail1").value;
-	var password = document.getElementById("InputPassword1").value;
-	if (email == "" || password == "") {
+	var name = document.getElementById("signUpName").value;
+	var email = document.getElementById("signUpEmail").value;
+	var password = document.getElementById("signUpPassword").value;
+	if (name == "" || email == "" || password == "") {
 		document.getElementById("fillout").innerHTML = "Please fill out all the fields.";
 	} else {
-		createUSER(email, password);
+		createUSER(name, email, password);
+
 		firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
 		  // Handle Errors here.
 		  var errorCode = error.code;
@@ -196,6 +196,7 @@ function signup() {
 		  console.log(errorCode);
 		  console.log(errorMessage);
 		});
+
 		firebase.auth().onAuthStateChanged(function(user) {
 			if (user) {
 		  	// User is signed in.
@@ -206,8 +207,5 @@ function signup() {
 			console.log("ERROR: No user signed in");
 			}
 		});
-		//$("#sucsessfully").show();
-		//clearSignup();
-		//location.assign("transhist.html");
 	}
 }

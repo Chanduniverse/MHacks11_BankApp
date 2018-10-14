@@ -1,18 +1,18 @@
 {
 "USERINFO": {
 	"Eagle": {
-		"First": "Eagle",
-		"Last": "Zhu",
+		"Name": "Eagle",
+		"Email": "eaglez129@gmail.com",
 		"Password": "xyz"
 		},
 	"Chandan": {
-		"First": "Chandan",
-		"Last": "Aralikatti",
+		"Name": "Chandan",
+		"Email": "chand4ara@gmail.com",
 		"Password": "1234"
 		},
 	"Pratham": {
-		"First": "Pratham",
-		"Last": "Patel",
+		"Name": "Pratham",
+		"Email": "proshizzle2002@gmail.com",
 		"Password": "545321"
 		}
 	},
