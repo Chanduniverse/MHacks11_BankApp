@@ -42,6 +42,21 @@ database.once('value', function(snapshot){
 });
 }
 
+function pageLoad() {
+
+	var user = firebase.auth().currentUser;
+	var name, email, photoUrl, uid, emailVerified;
+	if (user != null) {
+	  name = user.displayName;
+	  email = user.email;
+	  uid = user.uid;  // The user's ID, unique to the Firebase project. Do NOT use
+	                   // this value to authenticate with your backend server, if
+	                   // you have one. Use User.getToken() instead.
+	}
+
+	changeData(name);
+}
+
 function changeData(b){
 
 	var refrenceBalence = firebase.database().ref().child("USERDATA/" + b + "/CurrentCredit/");
@@ -54,7 +69,6 @@ function changeData(b){
 
 	firebase.auth().onAuthStateChanged(function(user) {
   		if (user) {
-			location.assign("transhist.html");
     		//changeData(user);
   		} else {
     		// No user is signed in.
@@ -84,14 +98,14 @@ function clearLogin() {
 }
 
 function eval() {
-
+/*
 	var email = document.getElementById("LoginInputEmail").value;
 	var password = document.getElementById("LoginInputPassword").value;
 
 	firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
 		clearLogin();
 		document.getElementById("wronglogin").innerHTML = "Incorrect name or password!"
-	});
+	});*/
 }
 
 function createUSER(name, mail, pass) {
@@ -172,8 +186,8 @@ function login() {
 			location.assign("transhist.html");
 		  } else {
 		    // No user is signed in.
-			console.log(error.code);
-			console.log(error.message);
+			//console.log(error.code);
+			//console.log(error.message);
 		  }
 		});
 	}
