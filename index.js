@@ -14,7 +14,7 @@ $(document).ready(function () {
 	});
 });
 
-function updateTable(n){
+/*function updateTable(n){
 	var database = firebase.database().ref().child("USERHIST/" + n + "/CurrentCredit/");
 database.once('value', function(snapshot){
     if(snapshot.exists()){
@@ -41,20 +41,20 @@ database.once('value', function(snapshot){
     }
 });
 }
+*/
 
 function changeData(b){
+
+	/*
 		var refrenceBalence = firebase.database().ref().child("USERDATA/" + b + "/CurrentCredit/");
 		var refrenceDebt = firebase.database().ref().child("USERDATA/" + b + "/CurrentDebt/");
-	//if (refrenceBalence !== null && refrenceDebt !== null){
+	if (refrenceBalence !== null && refrenceDebt !== null){
 		document.getElementById("currentBAL").value =  refrenceBalence;
 		document.getElementById("currentDEBT").value =  refrenceDebt;
 		updateTable(b);
-//}
+}
+*/
 
-//else{
-	document.getElementById("currentBAL").value = "DNE";
-	document.getElementById("currentDEBT").value = "DNE";
-//}
 	firebase.auth().onAuthStateChanged(function(user) {
   		if (user) {
 			location.assign("transhist.html");
@@ -86,7 +86,7 @@ function clearLogin() {
 	document.getElementById("LoginInputPassword").value = "";
 
 }
-
+/*
 function eval() {
 
 	var name = document.getElementById("LoginInputEmail").value;
@@ -97,16 +97,16 @@ function eval() {
 		document.getElementById("wronglogin").innerHTML = "Incorrect name or password!"
 
 	});
-
+*/
 
 }
 
-function createUSER(mail, pass) {
-/*
+function createUSER(first, mail, pass) {
+
 	firebase.database().ref('USERINFO/' + first).set({
 
 		First: first,
-		Last: last,
+		Email: mail,
 		Password: password
 	});
 
@@ -124,7 +124,7 @@ function createUSER(mail, pass) {
 		LoanAMT: [""],
 		Notes: [""]
 	});
-*/
+
 
 	var email = mail;
 	var password = pass;
